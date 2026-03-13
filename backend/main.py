@@ -9,9 +9,14 @@ models.Base.metadata.create_all(bind=database.engine)
 
 app = FastAPI()
 
+origins = [
+    "http://localhost:3000",
+    "https://smart-task-hub-one.vercel.app", 
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["smart-task-hub-one.vercel.app,http://localhost:3000"],
+    allow_origins=origins, 
     allow_credentials=True,
     allow_methods=["*"], 
     allow_headers=["*"], 
