@@ -15,7 +15,7 @@ export default function Home() {
 
   const fetchTasks = useCallback(async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/tasks");
+      const response = await fetch("https://smart-task-hub.onrender.com/tasks");
       const data = await response.json();
       setTasks(data);
     } catch (error) {
@@ -35,7 +35,7 @@ export default function Home() {
     if (!newTaskTitle.trim()) return;
     try {
       await fetch(
-        `http://127.0.0.1:8000/tasks?title=${encodeURIComponent(newTaskTitle)}&description=Açıklama`,
+        `https://smart-task-hub.onrender.com/tasks?title=${encodeURIComponent(newTaskTitle)}&description=Açıklama`,
         {
           method: "POST",
         },
@@ -49,7 +49,7 @@ export default function Home() {
 
   const deleteTask = async (id: number) => {
     try {
-      await fetch(`http://127.0.0.1:8000/tasks/${id}`, { method: "DELETE" });
+      await fetch(`https://smart-task-hub.onrender.com/tasks/${id}`, { method: "DELETE" });
       fetchTasks();
     } catch (error) {
       console.error("Silme hatası:", error);
@@ -59,7 +59,7 @@ export default function Home() {
   const toggleTask = async (task: Task) => {
     try {
       await fetch(
-        `http://127.0.0.1:8000/tasks/${task.id}?completed=${!task.completed}`,
+        `https://smart-task-hub.onrender.com/tasks/${task.id}?completed=${!task.completed}`,
         {
           method: "PUT",
         },
