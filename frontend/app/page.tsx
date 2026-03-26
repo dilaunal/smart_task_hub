@@ -70,10 +70,10 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-100 py-12 px-4 text-slate-900">
+      <main className="min-h-screen bg-gradient-to-br from-pink-50 to-rose-100 py-12 px-4 text-slate-900 font-sans">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-10">
-          <h1 className="text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 mb-2">
+          <h1 className="text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-rose-500 to-pink-500 mb-2">
             Smart Task Hub
           </h1>
           <p className="text-slate-500 font-medium">
@@ -81,7 +81,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="bg-white/70 backdrop-blur-md rounded-2xl shadow-sm p-2 flex gap-2 border border-white mb-8">
+          <div className="bg-white/70 backdrop-blur-md rounded-2xl shadow-sm p-2 flex gap-2 border border-rose-200 mb-8">
           <input
             type="text"
             value={newTaskTitle}
@@ -92,8 +92,8 @@ export default function Home() {
           />
           <button
             onClick={addTask}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg active:scale-95 transition-all"
-          >
+            className="bg-rose-500 hover:bg-rose-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg active:scale-95 transition-all"
+>
             Ekle
           </button>
         </div>
