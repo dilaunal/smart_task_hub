@@ -1,26 +1,20 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
-import models
-import database
-from fastapi import HTTPException
+from . import models, database  # ✅ Buradaki noktalar Render için hayati önemde!
 from fastapi.middleware.cors import CORSMiddleware
 
+# Veritabanı tablolarını en baştan hatasız oluşturur
 models.Base.metadata.create_all(bind=database.engine)
 
 app = FastAPI()
 
-origins = [
-    "http://localhost:3000",
-    "https://smart-task-hub-one.vercel.app", 
-
-]
-
+# CORS Ayarları: Vercel ve Localhost'tan gelen her şeye izin veriyoruz
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins, 
+    allow_origins=["*"], # ✅ En garanti yol: Herkese izin ver
     allow_credentials=True,
-    allow_methods=["*"], 
-    allow_headers=["*"], 
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 def get_db():
@@ -36,6 +30,7 @@ def get_tasks(db: Session = Depends(get_db)):
 
 @app.post("/tasks")
 def create_task(title: str, description: str, db: Session = Depends(get_db)):
+    # priority parametresi tamamen kaldırıldı, eski sade haline döndü
     new_task = models.TaskModel(title=title, description=description)
     db.add(new_task)
     db.commit()
@@ -62,4 +57,3 @@ def delete_task(task_id: int, db: Session = Depends(get_db)):
     db.delete(task)
     db.commit()
     return {"message": f"ID'si {task_id} olan görev başarıyla silindi"}
-    
