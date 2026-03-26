@@ -8,3 +8,4 @@ class TaskModel(Base):
     title = Column(String)
     description = Column(String)
     completed = Column(Boolean, default=False)
+    priority = Column(String, default="medium")

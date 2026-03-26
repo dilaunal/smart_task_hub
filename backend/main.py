@@ -12,11 +12,12 @@ app = FastAPI()
 origins = [
     "http://localhost:3000",
     "https://smart-task-hub-one.vercel.app", 
+    "*",
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins, 
+    allow_origins=["*"], 
     allow_credentials=True,
     allow_methods=["*"], 
     allow_headers=["*"], 
@@ -33,10 +34,13 @@ def get_db():
 def get_tasks(db: Session = Depends(get_db)):
     return db.query(models.TaskModel).all()
 
-
 @app.post("/tasks")
-def create_task(title: str, description: str, db: Session = Depends(get_db)):
-    new_task = models.TaskModel(title=title, description=description)
+def create_task(title: str, description: str, priority: str = "medium", db: Session = Depends(get_db)):
+    new_task = models.TaskModel(
+        title=title, 
+        description=description, 
+        priority=priority 
+    )
     db.add(new_task)
     db.commit()
     db.refresh(new_task)
