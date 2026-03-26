@@ -35,12 +35,8 @@ def get_tasks(db: Session = Depends(get_db)):
     return db.query(models.TaskModel).all()
 
 @app.post("/tasks")
-def create_task(title: str, description: str, priority: str = "medium", db: Session = Depends(get_db)):
-    new_task = models.TaskModel(
-        title=title, 
-        description=description, 
-        priority=priority 
-    )
+def create_task(title: str, description: str, db: Session = Depends(get_db)):
+    new_task = models.TaskModel(title=title, description=description)
     db.add(new_task)
     db.commit()
     db.refresh(new_task)

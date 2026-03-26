@@ -46,13 +46,12 @@ export default function Home() {
   const addTask = async () => {
     if (!newTaskTitle.trim()) return;
     try {
+      // Sadece title ve description gönderen eski, çalışan hali
       await fetch(
-        // ✅ URL sonuna priority parametresini ekledik
-        `https://smart-task-hub.onrender.com/tasks?title=${encodeURIComponent(newTaskTitle)}&description=Açıklama&priority=${priority}`,
+        `https://smart-task-hub.onrender.com/tasks?title=${encodeURIComponent(newTaskTitle)}&description=Açıklama`,
         { method: "POST" }
       );
       setNewTaskTitle("");
-      setPriority("medium"); // Ekleme sonrası sıfırla
       fetchTasks();
     } catch (error) {
       console.error("Ekleme hatası:", error);
