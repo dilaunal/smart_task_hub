@@ -14,6 +14,11 @@ export default function Home() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState("");
 
+  // Tamamlanan görev sayısını ve yüzdesini hesapla
+const completedCount = tasks.filter(t => t.completed).length;
+const totalCount = tasks.length;
+const progressPercentage = totalCount > 0 ? (completedCount / totalCount) * 100 : 0;
+
   const fetchTasks = useCallback(async () => {
     try {
       const response = await fetch("https://smart-task-hub.onrender.com/tasks");
@@ -80,6 +85,27 @@ export default function Home() {
             {tasks.length} aktif görev içinden {tasks.filter((t) => t.completed).length} tanesi tamamlandı
           </p>
         </div>
+
+       {/* İlerleme Çubuğu Bölümü */}
+<div className="mb-8 bg-white/40 backdrop-blur-sm p-4 rounded-2xl border border-pink-100 shadow-sm">
+  <div className="flex justify-between items-center mb-2">
+    <span className="text-sm font-bold text-pink-700">Tamamlanma Oranı</span>
+    <span className="text-sm font-black text-pink-600">%{Math.round(progressPercentage)}</span>
+  </div>
+  
+  {/* Gri Arka Plan Çubuğu */}
+  <div className="w-full bg-pink-100/50 h-3 rounded-full overflow-hidden border border-pink-200">
+    {/* Dolgu Yapan Pembe Çubuk */}
+    <div 
+      className="bg-gradient-to-r from-rose-400 to-pink-500 h-full transition-all duration-700 ease-out shadow-[0_0_10px_rgba(244,114,182,0.5)]"
+      style={{ width: `${progressPercentage}%` }}
+    />
+  </div>
+  
+  <p className="text-[11px] text-pink-500 mt-2 font-medium italic text-right">
+    {totalCount} görevden {completedCount} tanesi bitti! ✨
+  </p>
+</div>
 
           <div className="bg-white/70 backdrop-blur-md rounded-2xl shadow-sm p-2 flex gap-2 border border-rose-200 mb-8">
           <input
