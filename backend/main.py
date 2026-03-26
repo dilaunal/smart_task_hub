@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
-from . import models, database
+import models
+import database
 from fastapi import HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -11,12 +12,12 @@ app = FastAPI()
 origins = [
     "http://localhost:3000",
     "https://smart-task-hub-one.vercel.app", 
-    "*",
+
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], 
+    allow_origins=origins, 
     allow_credentials=True,
     allow_methods=["*"], 
     allow_headers=["*"], 
@@ -61,3 +62,4 @@ def delete_task(task_id: int, db: Session = Depends(get_db)):
     db.delete(task)
     db.commit()
     return {"message": f"ID'si {task_id} olan görev başarıyla silindi"}
+    
