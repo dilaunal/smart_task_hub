@@ -10,19 +10,9 @@ interface Task {
   priority: string; // ✅ TypeScript için burayı ekledik
 }
 
-const getPriorityColor = (priority: string) => {
-  switch (priority) {
-    case "high": return "bg-red-100 text-red-700 border-red-200";
-    case "medium": return "bg-amber-100 text-amber-700 border-amber-200";
-    case "low": return "bg-emerald-100 text-emerald-700 border-emerald-200";
-    default: return "bg-slate-100 text-slate-700 border-slate-200";
-  }
-};
-
 export default function Home() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState("");
-  const [priority, setPriority] = useState("medium");
 
   const fetchTasks = useCallback(async () => {
     try {
@@ -91,25 +81,6 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Öncelik Seçim Butonları */}
-        <div className="flex gap-2 mb-3 px-2">
-          {['low', 'medium', 'high'].map((p) => (
-            <button
-              key={p}
-              onClick={() => setPriority(p)}
-              className={`px-4 py-1 rounded-full text-[10px] font-bold border transition-all ${
-                priority === p 
-                  ? (p === 'high' ? 'bg-red-500 text-white border-red-500' : 
-                     p === 'medium' ? 'bg-amber-500 text-white border-amber-500' : 
-                     'bg-emerald-500 text-white border-emerald-500')
-                  : 'bg-white/50 text-slate-400 border-slate-200'
-              }`}
-            >
-              {p === 'high' ? 'ACİL' : p === 'medium' ? 'NORMAL' : 'DÜŞÜK'}
-            </button>
-          ))}
-        </div>
-
         <div className="bg-white/70 backdrop-blur-md rounded-2xl shadow-sm p-2 flex gap-2 border border-white mb-8">
           <input
             type="text"
@@ -149,9 +120,7 @@ export default function Home() {
                     <span className={`text-lg transition-all ${task.completed ? "text-slate-400 line-through opacity-60" : "text-slate-700 font-medium"}`}>
                       {task.title}
                     </span>
-                    <span className={`w-fit text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-full border ${getPriorityColor(task.priority)}`}>
-                      {task.priority === 'high' ? 'Acil' : task.priority === 'medium' ? 'Normal' : 'Düşük'}
-                    </span>
+
                   </div>
                 </div>
                 <button onClick={() => deleteTask(task.id)} className="opacity-0 group-hover:opacity-100 text-slate-400 hover:text-red-500 p-2 transition-all">
