@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
-from . import models, database  # ✅ Buradaki noktalar Render için hayati önemde!
+import models  # ✅ Artık nokta koymadan direkt çağırabilirsin!
+import database
 from fastapi.middleware.cors import CORSMiddleware
 
 # Veritabanı tablolarını en baştan hatasız oluşturur
